@@ -8,66 +8,64 @@ All colors MUST be HSL for consistency and theming.
 
 @layer base {
   :root {
-    /* Soft light background with subtle warmth */
-    --background: 48 15% 97%;
-    --foreground: 210 8% 25%;
+    /* Clean professional photo editor palette */
+    --background: 250 250 250;
+    --foreground: 45 45 45;
 
     /* Card system with subtle elevation */
-    --card: 0 0% 100%;
-    --card-foreground: 210 8% 25%;
+    --card: 255 255 255;
+    --card-foreground: 45 45 45;
 
     /* Popover styling */
-    --popover: 0 0% 100%;
-    --popover-foreground: 210 8% 25%;
+    --popover: 255 255 255;
+    --popover-foreground: 45 45 45;
 
-    /* Primary brand colors - sophisticated purple-blue */
-    --primary: 258 84% 65%;
-    --primary-foreground: 0 0% 100%;
-    --primary-light: 258 84% 75%;
-    --primary-dark: 258 84% 55%;
+    /* Primary - professional blue-purple gradient */
+    --primary: 239 68% 68%;
+    --primary-foreground: 255 255 255;
 
-    /* Secondary - warm gray for sophistication */
-    --secondary: 210 10% 92%;
-    --secondary-foreground: 210 8% 30%;
+    /* Secondary - clean neutrals */
+    --secondary: 246 246 246;
+    --secondary-foreground: 45 45 45;
 
     /* Muted tones for subtle elements */
-    --muted: 210 12% 94%;
-    --muted-foreground: 210 8% 45%;
+    --muted: 246 246 246;
+    --muted-foreground: 115 115 115;
 
-    /* Accent - warm creative orange */
-    --accent: 25 95% 68%;
-    --accent-foreground: 210 8% 25%;
+    /* Accent - secondary gradient color */
+    --accent: 242 242 242;
+    --accent-foreground: 45 45 45;
 
     /* Status colors */
-    --destructive: 0 75% 60%;
-    --destructive-foreground: 0 0% 100%;
-    --success: 142 76% 36%;
-    --success-foreground: 0 0% 100%;
-    --warning: 43 96% 56%;
-    --warning-foreground: 210 8% 25%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
 
     /* Border and input styling */
-    --border: 210 15% 88%;
-    --input: 210 15% 88%;
-    --ring: 258 84% 65%;
+    --border: 229 229 229;
+    --input: 229 229 229;
+    --ring: 200 200 200;
 
-    /* Modern border radius for luxurious feel */
-    --radius: 12px;
-    --radius-lg: 16px;
-    --radius-xl: 24px;
+    /* Modern border radius */
+    --radius: 0.75rem;
 
-    /* Shadows for depth and luxury */
-    --shadow-soft: 0 2px 8px -2px hsl(210 8% 0% / 0.08);
-    --shadow-medium: 0 4px 24px -4px hsl(210 8% 0% / 0.12);
-    --shadow-large: 0 8px 48px -8px hsl(210 8% 0% / 0.16);
+    /* Professional Photo Editor Design System */
+    --gradient-primary: linear-gradient(135deg, rgb(239, 68%, 68%), rgb(124, 58%, 237%));
+    --gradient-subtle: linear-gradient(180deg, rgb(250, 250, 250), rgb(246, 246, 246));
+    --shadow-soft: 0 1px 3px 0 rgba(0, 0, 0, 0.04), 0 1px 2px -1px rgba(0, 0, 0, 0.04);
+    --shadow-medium: 0 4px 16px -4px rgba(0, 0, 0, 0.08), 0 2px 8px -2px rgba(0, 0, 0, 0.06);
+    --shadow-large: 0 12px 32px -8px rgba(0, 0, 0, 0.12), 0 4px 16px -4px rgba(0, 0, 0, 0.08);
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     
-    /* Glass effect for modern look */
-    --glass-bg: hsl(0 0% 100% / 0.8);
-    --glass-border: hsl(210 15% 88% / 0.5);
-
-    /* Gradient for AI branding */
-    --gradient-primary: linear-gradient(135deg, hsl(258 84% 65%), hsl(280 84% 65%));
-    --gradient-accent: linear-gradient(135deg, hsl(25 95% 68%), hsl(45 95% 68%));
+    /* Pro color palette for photo editing */
+    --editor-primary: 239 68% 68%;
+    --editor-secondary: 124 58% 237%;
+    --editor-surface: 255 255 255;
+    --editor-surface-elevated: 252 252 252;
+    --editor-text: 45 45 45;
+    --editor-text-muted: 115 115 115;
+    --editor-border: 229 229 229;
+    --editor-border-subtle: 242 242 242;
   }
 }
 
