@@ -88,19 +88,54 @@ export const PhotoEditor = () => {
 
       if (inputError) throw inputError;
 
-      let maskId = null;
-      // TODO: Implement mask saving once types are updated
-      // if (maskData) {
-      //   maskId = 'temp-mask-id';
-      // }
+      // Call the img2img generation edge function
+      const { data: generationData, error: generationError } = await supabase.functions.invoke('generate-img2img', {
+        body: {
+          imageUrl: currentImage,
+          prompt: prompt,
+          negativePrompt: negativePrompt || null,
+          denoisingStrength: denoisingStrength,
+          guidanceScale: guidanceScale,
+          seed: seed,
+          model: selectedModel
+        }
+      });
 
-      // TODO: Implement actual AI generation API call
-      // For now, simulate generation
-      await new Promise(resolve => setTimeout(resolve, 3000));
-      
+      if (generationError) {
+        console.error('Generation error:', generationError);
+        throw new Error(generationError.message || 'Generation failed');
+      }
+
+      if (!generationData?.success) {
+        console.error('Generation failed:', generationData?.error);
+        throw new Error(generationData?.error || 'Generation failed');
+      }
+
+      // Save generated image metadata to database
+      const { data: savedGeneration, error: saveError } = await supabase
+        .from('generated_images')
+        .insert({
+          input_id: inputData.id,
+          output_url: generationData.outputUrl,
+          model_name: generationData.generationParams.model,
+          negative_prompt: generationData.generationParams.negativePrompt,
+          denoise_strength: generationData.generationParams.denoisingStrength,
+          guidance_scale: generationData.generationParams.guidanceScale,
+          seed: generationData.generationParams.seed,
+          controlnet_module: selectedControlNet !== "none" ? selectedControlNet : null
+        })
+        .select()
+        .single();
+
+      if (saveError) {
+        console.error('Error saving generation metadata:', saveError);
+      }
+
+      // Add to local state
+      const actualSeed = generationData.generationParams.seed || (seed === -1 ? Math.floor(Math.random() * 1000000) : seed);
       const newImage: GeneratedImage = {
-        id: Date.now().toString(),
-        url: currentImage, // In real app, this would be the generated image
+        id: savedGeneration?.id || Date.now().toString(),
+        url: generationData.outputUrl,
         prompt,
         negative_prompt: negativePrompt || undefined,
         timestamp: new Date(),
@@ -108,17 +143,14 @@ export const PhotoEditor = () => {
         controlnet_module: selectedControlNet !== "none" ? selectedControlNet : undefined,
         denoising_strength: denoisingStrength,
         guidance_scale: guidanceScale,
-        seed: seed === -1 ? Math.floor(Math.random() * 1000000) : seed,
+        seed: actualSeed,
       };
-
-      // TODO: Save generated image metadata once types are updated
-      // await supabase.from('generated_images').insert({...});
-
+      
       setGeneratedImages(prev => [newImage, ...prev]);
       toast.success("Image generated successfully!");
     } catch (error) {
       console.error('Generation error:', error);
-      toast.error("Generation failed. Please try again.");
+      toast.error(error instanceof Error ? error.message : "Generation failed. Please try again.");
     } finally {
       setIsGenerating(false);
     }
